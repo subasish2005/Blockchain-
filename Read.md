@@ -1,4 +1,3 @@
-# Blockchain-
 How does distributed ledger system work?
 Ans.in a distributed ledger system there are different kind of nodes and each node play a different part 
         1.full nodes:store the entire copy of ledger
