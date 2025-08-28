@@ -12,6 +12,7 @@ the ledger is
         4.secure-secured with cryptographic algorithms
 
 How does distributed ledger system work?
+
 Ans.in a distributed ledger system there are different kind of nodes and each node play a different part 
         1.full nodes:store the entire copy of ledger
           validate transactions and blocks according to the rules
