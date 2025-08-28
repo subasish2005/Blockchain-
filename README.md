@@ -34,23 +34,30 @@ Ans.in a distributed ledger system there are different kind of nodes and each no
 
 
 how does it work 
+
 lets say alice sends 2  btc to bob on a blockchain 
+
 1.transaction creation:
     alice creates a transaction to send 2 btc to bob and then brodcasts it to the network
+
 2.transaction propagation:
     the transaction is propagated to other nodes in the network
+
 3.transaction validation:
     full nodes validate the transaction and check if the sender has enough balance to send the amount
     nodes check if alice really has 2 btc the signature is valid and no double spending is happening 
     if valid transaction is forwarded to others
+
 4.consensus process:
     miners/validators nodes group valid transactions into a block 
     they compete or are chose depending on pow or pos and add this block to the ledger 
     this process is called consensus process
+
 5.block added to the ledger:
     once consesus is reached the block is added to the ledger
     all full nodes update their copy of the ledger 
     this process is called block propagation
+    
 6.transaction confirmation:
     bob now has 2 btc in his account
     the network confirms that and it becomes immutable 
