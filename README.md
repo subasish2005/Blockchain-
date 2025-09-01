@@ -105,7 +105,7 @@ A reference of a previous block is also included in the block unless it is a gen
 
 Few attributes that are essential to the functionality of a block:the block header which is composed of pointer to previous block ,the timestamp ,nonce ,merkle root and the bnlock body that contains transactions ,there are other parts to a block but they are not so important for us right now
 
-Nonce (Number Used Once)
+*****Nonce (Number Used Once)
 
 Definition: A nonce is a random or sequential number that is generated and used only once.
 
@@ -124,3 +124,89 @@ Example: In Bitcoin, miners try billions of different nonces per second to find 
 Once found → block is accepted, and the miner is rewarded.
 
 👉 Think of a nonce as a "random ticket number" miners keep guessing until they hit the jackpot.
+
+
+*****Merkle Root & Merkle Tree
+
+Merkle Tree: A binary tree of hashes used to represent all transactions in a block.
+
+Every transaction is hashed.
+
+Pairs of transaction hashes are hashed again → building up a tree.
+
+Continues until only one hash remains at the top = the Merkle Root.
+
+Merkle Root:
+
+A single hash that represents all transactions in the block.
+
+Stored in the block header.
+
+Instead of checking every transaction, you can just check the Merkle Root to verify integrity.
+
+👉 Example:
+
+Suppose 8 transactions are in a block.
+
+Instead of verifying all 8, you hash them pairwise → then hash those results → continue until one root hash is left.
+
+If just one transaction changes, the Merkle Root changes, showing tampering.
+
+
+scripting or programming language :scripts or programs perform various operations on a transaction in order to facilitate vraious functions such as signing a transaction or checking the validity of a transaction ,etherium solidity is a turing complete programming language used for writing smart contracts on the ethereum blockchain network 
+
+virtual machine :this is anextension of the transaction script introduced earlier .A virtual machine allows turing complete code to be run on blockchain as smart contract ;whereas a transcription script is limited inits operations and capabilities.Various blockchains use
+virtual machines to run programs such as Ethereum Virtual Machine (EVM) and Chain Virtual
+Machine (CVM). EVM is used in Ethereum blockchain, while CVM is a virtual machine developed for
+and used in an enterprise-grade blockchain called Chain Core
+
+State Machine:a blockchain can be viewed as a state transtition mechanism where by a state is modified fromits inital form to the next one and eventually the final form by nodes on the blockchain network as a result of a transaction execution,validation and finalization process
+
+Node:a node is a blockchain network performs various functions depending on the role that it takes on.A node can propose and validate transactions and perform mining to facilitate consensus and secure the blockchain network.the goal is achieved by following a consensus protocol nodes can also perform othe rfunctions such as a simple payment verification ,validation and many other functions depending onthe type of the blockchain used and the role assigned to the node
+                                                                                e. Nodes also perform a transaction signing function. Transactions are first created by nodes and then also digitally
+                                                                                signed by nodes using private keys as proof that they are the legitimate owner of the asset that they wish to
+                                                                                transfer to someone else on the blockchain network. This asset is usually a token or virtual currency, such
+                                                                                as Bitcoin, but it can also be any real-world asset represented on the blockchain by using tokens.
+
+smart contract:these programs run on top of the blockchain and encapsulate the business logic to be executed when certian conidtions are met.these programs are enforceable and automatically executable when certains conditions are met.the smart contract is not available onall blockchain platforms but it is now becoming a very desirable feature due to the flexibility and powe that it provides to the blokchian applications
+****HOW DOES THE BLOCKCHAIN WORK?****
+
+ANS. Nodes in a blockchain network 
+a blockchain is made up of nodes computers connected to the blockchain network. these nodes play different roles:
+  
+.Miners
+(in proof of work systems like bitcoin):
+                                              .compete to create a new blocks.
+                                              .they solve a computational puzzle finding a valid nonce so that the block has neets the difficulty target.
+                                              .the winner gets to mint the cryptocurrency (block reward and transaction fees)
+
+block signers
+(in proof of stake and similar systems like ethereum):
+                                                     .instead of mining,validators sign and validate transactions.
+                                                     .they prove ownership of staked coins are randomly or deterministically chosen to append a block to the chain.
+
+How a blockchain accumulates blocks 
+
+AND. now we will look a at a general scheme for creating blocks.hit sscheme is presented her eto give you a general idea of how are block are generated and the realtionship is between transactions and blocks:
+1. a node strats a trnasaction and first creating and then digitally signing it with its private key. a transaction can represent various actions in a blockchain.Most commonly this is a data structure that represents transfer of value betwen users on the blockchain network .thransactions data structure usually consists of some logic of transfering value from one user to another ,relevent rules ,source and destination addresses and other validation information.
+
+2. A trnasaction is propogated (flooded) by using flooding protocol called gossip protocol to peers that validate the transaction based on preset criteria.usually m ore than one noder are required to verify the transaction before it can be added to the blockchain.
+
+3. Once a transaction is validated by a sufficient number of nodes ,the transaction is added to the blockchain and is included in a new block which is then propagated onto the network at this point the transaction is considered as part of the blockchain and is immutable.
+
+4. The block is then added to the blockchain and it becomes a part of the ledger,and the next block links itself cryptographically back to this block and this link is a has pointer at this stage the transaction gets its second confirmation and th eblock gets its first confirmation 
+
+5. The block is then propagated to other nodes in the network and they validate the block and add it to their local copy of the blockchain.
+
+Types of blockchain 
+Based on the way that blokcchain has evolved over teh last few years it can be divided into multiple categories with distinct thought sometimes partially overlapping attributes 
+so they are 
+
+.Distributes ledgers
+
+.Distributed ledgers technology
+
+.Blockchains 
+
+.Ledgers
+
