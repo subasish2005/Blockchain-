@@ -170,3 +170,117 @@ Once a smart contract is deployed on Ethereum, its code hash is permanently fixe
 
 * virtual machine :a virtual machine is an emulation of a physical machine it allows you to run multiple operating system on a single physical machine by abstracting the underlying hardware resources 
 this abstraction is done using a hypervision or virtualization layer which allocates resources to each virtual machine 
+
+Eth virtual machine :it is very similar to jvm in the both are virtual machines designed to run platform independent code but they differ signifianlty in their purpose design and what they execute 
+
+the solidity code is converted a byte code and then it is run in an evm 
+
+any code that lets us start a evm is a eth client and what is the benefit : one very big advantage of eth is that it is a permissionless blockchain and anyone can write smart contracts and deploy them on the blockchain and it is decentralised 
+
+there are various implementation of evm like evm over go and also cpp 
+
+* solidity ,abis ,byte code and opcode
+
+solidity :solidity is a  high level programmming language designed for writing smart contracts that run the evm developers use solidity to implement smart contracts that can be deployed on blockchain platform liek eth allowing for creating of decentralized applications
+
+for a code like this 
+contract Counter {
+    uint count;
+
+    function increment() public {
+        count++;
+    }
+}
+
+Under the Hood
+When you call:
+
+increment()
+
+Ethereum does:
+
+Finds contract address
+Loads contract bytecode using codeHash
+Starts EVM execution
+Runs opcodes
+Updates storage
+Saves new state
+
+The contract itself already exists permanently.
+
+
+ABI (Application Binary Interface)
+ABI is basically:
+The communication format between humans/apps and smart contracts.
+It tells:
+
+what functions exist
+what parameters they take
+what they return
+how to encode/decode data
+
+for a smart contract like this
+contract Calculator {
+
+    function add(uint a, uint b)
+        public
+        pure
+        returns(uint)
+    {
+        return a + b;
+    }
+}
+abi for this is 
+[
+  {
+    "inputs": [
+      { "name": "a", "type": "uint256" },
+      { "name": "b", "type": "uint256" }
+    ],
+    "name": "add",
+    "outputs": [
+      { "type": "uint256" }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  }
+]
+and without abi :
+metamask can not call functions 
+frontend can not interact 
+web3.js and ether.js can not encode data
+
+so if front end does this 
+contract.add(1,2)
+abi helps convert this into
+binary encoded transaction data for the evm 
+evm does not understand this add(1,2) but it can understand this binary encoded transaction data
+so abi encodes it into 
+0x771602f7
+0000000000000000000000000000000000000000000000000000000000000005
+0000000000000000000000000000000000000000000000000000000000000003
+
+
+Solidity Code
+      ↓
+ABI + Bytecode Generated
+      ↓
+Frontend Uses ABI
+      ↓
+Transaction Sent
+      ↓
+EVM Loads Bytecode
+      ↓
+EVM Executes Opcodes
+      ↓
+World State Changes
+
+3. Opcodes
+
+Opcodes are:
+The actual instructions executed by the EVM CPU.
+
+they are like cpu instructions 
+
+* evm is a stack based virtual machine 
+ 
