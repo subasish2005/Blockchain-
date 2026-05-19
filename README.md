@@ -281,9 +281,9 @@ Interoperability: Different blockchains can connect through sidechains.
 
 Specialization: Sidechains can be optimized for speed, privacy, or specific applications.
 
-                                                        Sidechain	Peg Type	Parent Chain	Purpose
-                                                        Polygon PoS	Two-way	Ethereum	Scalability, cheap txns
-                                                        Rootstock	Two-way	Bitcoin	Smart contracts on BTC
-                                                        Liquid	Two-way	Bitcoin	Fast, private transactions
-                                                        Skale	Two-way	Ethereum	App-specific sidechains
-                                                        Ardor/ Ignis	Two-way	Ardor main	Modular, business-focused
+                                    Sidechain	    Peg Type	Parent Chain	Purpose
+                                    Polygon PoS	    Two-way	    Ethereum	    Scalability, cheap txns
+                                    Rootstock	    Two-way	    Bitcoin	Smart   contracts on BTC
+                                    Liquid  	    Two-way	    Bitcoin	Fast,   private transactions
+                                    Skale	        Two-way	    Ethereum	    App-specific sidechains
+                                    Ardor/ Ignis	Two-way	    Ardor main	    Modular, business-focused
