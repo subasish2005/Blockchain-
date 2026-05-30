@@ -1,51 +1,56 @@
-# React + Vite
+# Wallet Transfer Demo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a React + Vite wallet app that connects to a browser wallet and sends ETH to another address.
 
-Currently, two official plugins are available:
+## Libraries
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- `wagmi` handles wallet connection, account state, chain switching, transaction submission, and transaction confirmation.
+- `viem` handles Ethereum-specific utilities. In this app it validates recipient addresses with `isAddress`, converts ETH into wei with `parseEther`, and formats wei back to ETH with `formatEther`.
+- `@tanstack/react-query` is the query and cache layer. The package name still contains `react-query`, but the library is TanStack Query. In this app it stores the balance query, keeps it cached, and lets us invalidate it after a transfer is confirmed.
 
-## React Compiler
+## File Map
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [src/main.jsx](src/main.jsx) creates the shared `QueryClient`, wraps the app in `QueryClientProvider`, and also wraps it in `WagmiProvider`.
+- [src/wagmi.js](src/wagmi.js) defines supported chains, connectors, and RPC transports.
+- [src/App.jsx](src/App.jsx) renders the send form, reads wallet state, fetches balance, and submits transactions.
 
-## Expanding the ESLint configuration
+## Complete Flow
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. The app starts in [src/main.jsx](src/main.jsx).
+2. `WagmiProvider` makes wallet state available to every component.
+3. `QueryClientProvider` makes the shared TanStack Query cache available to every component.
+4. `App.jsx` uses wagmi hooks like `useAccount`, `useConnect`, `useSendTransaction`, and `useWaitForTransactionReceipt`.
+5. `App.jsx` uses `usePublicClient` plus `useQuery` to read the connected wallet balance from the blockchain.
+6. When the user submits a transfer, `viem.parseEther` converts the ETH amount into wei.
+7. wagmi submits the transaction through the connected wallet.
+8. After the transaction is confirmed, the query client invalidates the balance query so the balance is fetched again.
 
+## Why Providers Live In Main
 
-you wrap the app in src/main.jsx because both wagmi and tanstack query work through react context in simple words that wrapper is the place where you turn on the wallet system and data cache system for the whole app
+The providers belong in [src/main.jsx](src/main.jsx) because they must wrap the whole React tree. That gives every child component access to the same wallet setup and the same query cache.
 
-wagmi provider gives component access to the same wallet configurations and wallet state 
+## State Split
 
-In your code, this part:
-<WagmiProvider config={config}>
-  <QueryClientProvider client={queryClient}>
-    <App />
-  </QueryClientProvider>
-</WagmiProvider>
-means:
+- React state holds local form values like the recipient address and ETH amount.
+- wagmi hooks hold external wallet state like the connected account, chain, and transaction status.
+- TanStack Query holds cached blockchain data like the live balance.
 
-every component inside App can call wagmi hooks
-every component inside App can call TanStack Query hooks
-they all share one consistent wallet setup and one shared cache
+## User Flow
 
-A provider is the setup layer. A hook is the way a component asks for data. A client/config is the object that tells the provider what to manage.
+1. Connect a wallet.
+2. Enter the recipient address.
+3. Enter the ETH amount.
+4. Submit the transaction.
+5. Wait for confirmation.
+6. The balance query refreshes automatically after the transfer is confirmed.
 
-Think of it like this:
+## Run It
 
-WagmiProvider is the wallet system’s “power switch” for the app.
-QueryClientProvider is the async data system’s “power switch.”
-useAccount, useConnect, and useQuery are the buttons your components press to read from those systems.
+```bash
+npm install
+npm run dev
+```
 
-so from here all the compnents can use wallet state and cached query state
+## Important Note
 
-
-useEffect dependency array — detailed rules and patterns
-
-What it is: the second argument to useEffect, an array of values React watches. React re-runs the effect when any value in the array changes.
-Empty array []: run once after mount; run cleanup (if returned) on unmount. Use for one-time setup (fetch on load, subscribe once, attach listeners).
-No array: effect runs after every render (rarely what you want).
-Non-empty array [a, b]: run on mount and whenever a or b change.
+This example expects an injected browser wallet like MetaMask. If no wallet extension is installed, the connect buttons will not work. If the wallet is on the wrong network, switch chains in the UI before sending.
